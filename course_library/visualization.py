@@ -58,7 +58,8 @@ def rotate_labels(sm):
 		[s.yaxis.label.set_rotation(0) for s in sm.reshape(-1)]
  
 
-def plot_conf_mat(y_true, y_pred, classes, normalize=False, title=None, cmap=plt.cm.Blues):
+def plot_conf_mat(y_true, y_pred, classes, normalize=False, title=None, 
+				cmap=plt.cm.Blues):
  		"""
  		This function prints and plots the confusion matrix.
  		Normalization can be applied by setting `normalize=True`.
@@ -70,11 +71,8 @@ def plot_conf_mat(y_true, y_pred, classes, normalize=False, title=None, cmap=plt
  				title = 'Confusion matrix, without normalization'
 
  		# Compute confusion matrix
- 		cm = confusion_matrix(y_true, y_pred)
+ 		cm = confusion_matrix(y_true, y_pred, labels=classes)
 
- 		# Only use the labels that appear in the data
- 		labels_present = unique_labels(y_true, y_pred)
- 		classes = classes[labels_present]
  		if normalize:
  			cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
  			print("Normalized confusion matrix")
