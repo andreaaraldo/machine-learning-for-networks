@@ -72,7 +72,9 @@ def plot_conf_mat(y_true, y_pred, classes, normalize=False, title=None, cmap=plt
  		# Compute confusion matrix
  		cm = confusion_matrix(y_true, y_pred)
  		# Only use the labels that appear in the data
- 		classes = classes[unique_labels(y_true, y_pred)]
+ 		labels_present = unique_labels(y_true, y_pred)
+ 		classes = classes[labels_present]
+ 		
  		if normalize:
  			cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
  			print("Normalized confusion matrix")
