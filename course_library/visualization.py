@@ -2,6 +2,7 @@ import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
+from sklearn.utils.multiclass import unique_labels
 
 def plot_corr(df, width, height, print_value, thresh=0):
 	    """ Plot a correlation plot
