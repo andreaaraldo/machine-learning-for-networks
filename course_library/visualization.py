@@ -1,6 +1,7 @@
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
+from sklearn.metrics import confusion_matrix
 
 def plot_corr(df, width, height, print_value, thresh=0):
 	    """ Plot a correlation plot
