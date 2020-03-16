@@ -58,8 +58,13 @@ def rotate_labels(sm):
 		[s.yaxis.label.set_rotation(0) for s in sm.reshape(-1)]
  
 
+from sklearn.metrics import confusion_matrix
+from sklearn.utils.multiclass import unique_labels
+import numpy as np
+
+
 def plot_conf_mat(y_true, y_pred, class_names, normalize=False, title=None, 
-			cmap=plt.cm.Blues):
+    cmap=plt.cm.Blues):
  		"""
  		This function prints and plots the confusion matrix.
  		Normalization can be applied by setting `normalize=True`.
@@ -76,12 +81,22 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=False, title=None,
 		# while in case of anomaly detection models, the categories are
 		# anomaly / normal
 		#
+    # In case of errors, you may need to do 
+    #     class_names = np.array(class_names)
+    # to be sure you satisfy this requirement
+
  		"""
+ 		if not isinstance(class_names, (np.ndarray) ):
+ 		  raise TypeError('class_names must be an np.array. It is instead ', 
+                     type(class_names), '. Try to convert to arrays before: executing',
+                     'class_names = np.array(class_names)')
+    
+    
  		if not title:
- 			if normalize:
- 				title = 'Normalized confusion matrix'
- 			else:
- 				title = 'Confusion matrix, without normalization'
+ 		  if normalize:
+ 		    title = 'Normalized confusion matrix'
+ 		  else:
+ 		    title = 'Confusion matrix, without normalization'
 
  		# Compute confusion matrix
  		cm = confusion_matrix(y_true, y_pred)
