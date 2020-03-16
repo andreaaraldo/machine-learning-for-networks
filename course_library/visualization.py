@@ -58,10 +58,24 @@ def rotate_labels(sm):
 		[s.yaxis.label.set_rotation(0) for s in sm.reshape(-1)]
  
 
-def plot_conf_mat(y_true, y_pred, classes, normalize=False, title=None, cmap=plt.cm.Blues):
+def plot_conf_mat(y_true, y_pred, class_names, normalize=False, title=None, 
+			cmap=plt.cm.Blues):
  		"""
  		This function prints and plots the confusion matrix.
  		Normalization can be applied by setting `normalize=True`.
+
+ 		# Suppose target is the array of the true categories.
+		# It contains as many values as the number of samples. Each value is an
+		# integer number corresponding to a certain category. This array
+		# represents the true category of each sample.
+		#
+		# predicted has the same format, but it does not represent the true
+		# category, rather it represents the result of a model.
+		#
+		# Note in case of classification models, the categories are the classes,
+		# while in case of anomaly detection models, the categories are
+		# anomaly / normal
+		#
  		"""
  		if not title:
  			if normalize:
@@ -74,7 +88,7 @@ def plot_conf_mat(y_true, y_pred, classes, normalize=False, title=None, cmap=plt
 
  		# Only use the labels that appear in the data
  		labels_present = unique_labels(y_true, y_pred)
- 		classes = classes[labels_present]
+ 		classes = class_names[labels_present]
  		if normalize:
  			cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
  			print("Normalized confusion matrix")
