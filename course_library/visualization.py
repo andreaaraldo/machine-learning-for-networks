@@ -56,7 +56,7 @@ def rotate_labels(sm):
 		[s.yaxis.label.set_rotation(0) for s in sm.reshape(-1)]
  
 
- def plot_confusion_matrix(y_true, y_pred, classes,
+ def plot_conf_mat(y_true, y_pred, classes,
                           normalize=False,
                           title=None,
                           cmap=plt.cm.Blues):
