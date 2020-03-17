@@ -103,7 +103,6 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
 
  		# Only use the labels that appear in the data
  		labels_present = unique_labels(y_true, y_pred)
- 		print('labels_present', labels_present)
  		classes = class_names[labels_present]
  		if normalize:
  			cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
