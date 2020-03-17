@@ -63,7 +63,7 @@ from sklearn.utils.multiclass import unique_labels
 import numpy as np
 
 
-def plot_conf_mat(y_true, y_pred, class_names, normalize=False, title=None, 
+def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None, 
     cmap=plt.cm.Blues):
  		"""
  		This function prints and plots the confusion matrix.
