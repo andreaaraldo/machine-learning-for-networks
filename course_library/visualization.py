@@ -140,10 +140,10 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
  		return ax
 
 
- def plot_feature_importances(importances, feature_names):
+def plot_feature_importances(importances, feature_names):
   """
   Plots the feature importance with bars. 
-  
+
   To use with Random Forest Classifiers or Regressors.
 
   Parameters:
