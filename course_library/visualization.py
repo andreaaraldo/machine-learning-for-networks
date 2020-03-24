@@ -138,3 +138,26 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
  					color="white" if cm[i, j] > thresh else "black")
  		fig.tight_layout()
  		return ax
+
+
+ def plot_feature_importances(importances, feature_names):
+  """
+  Plots the feature importance with bars. 
+  
+  To use with Random Forest Classifiers or Regressors.
+
+  Parameters:
+  --------------
+  importances: the list of values of feature importances. You can get 
+  				it as model.feature_importances (if model is the name of
+  				your Random Forest model)
+  feature_names: the list of feature names
+
+  Credits to spies006: https://stackoverflow.com/a/44102451/2110769
+  """
+  indices = np.argsort(importances)
+  plt.title('Feature Importances')
+  plt.barh(range(len(indices)), importances[indices], color='b', align='center')
+  plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
+  plt.xlabel('Relative Importance')
+  plt.show()
