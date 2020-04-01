@@ -79,7 +79,7 @@ class AndreaLinearRegression(BaseEstimator, RegressorMixin):
 
 
 
-def subsample(X, y, n,random_state):
+def subsample_two_arrays(X, y, n,random_state=None):
 	"""
 	Take a subsample of X and y composed of n rows.
 
@@ -107,3 +107,25 @@ def subsample(X, y, n,random_state):
 					random_state=random_state)
 
 	return X_sub, y_sub
+
+
+def subsample(X, n,random_state=None):
+	"""
+	Take a subsample of X and y composed of n rows.
+
+	Parameters
+	-------------------
+	X:		Array
+	n:		Number of rows to take
+	random_state: 	the seed
+
+
+	Returns
+	-------------------
+	X_sub:	A sample of n rows from X, selected randomly
+	"""
+	
+	X_sub, X_ignore = train_test_split(X, train_size=n , 
+					random_state=random_state)
+
+	return X_sub

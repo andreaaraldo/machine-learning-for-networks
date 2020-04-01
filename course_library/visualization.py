@@ -166,7 +166,9 @@ def plot_feature_importances(importances, feature_names):
 
 
 
-def silhouette_diagram(X_, cluster_labels, n_clusters, title="Silhouette diagram"):
+def silhouette_diagram(X_, cluster_labels, n_clusters, sample_size=None,
+	random_state = None,
+	title="Silhouette diagram"):
   """
   This code is based on scikit learn documentation:
   https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py
