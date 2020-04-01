@@ -184,7 +184,7 @@ def silhouette_diagram(X_, cluster_labels, n_clusters, title="Silhouette diagram
 
   fig, ax1 = plt.subplots()
   fig.set_size_inches(9, 7)
-  ax1.set_xlim([-0.1, 1])
+  ax1.set_xlim([-1, 1])
 
   # The (n_clusters+1)*10 is for inserting blank space between silhouette
   # plots of individual clusters, to demarcate them clearly.
