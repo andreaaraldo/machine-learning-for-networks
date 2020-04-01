@@ -3,6 +3,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 from sklearn.utils.multiclass import unique_labels
+import matplotlib.cm as cm
 
 def plot_corr(df, width, height, print_value, thresh=0):
 	    """ Plot a correlation plot
@@ -161,3 +162,62 @@ def plot_feature_importances(importances, feature_names):
   plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
   plt.xlabel('Relative Importance')
   plt.show()
+
+
+
+
+def silhouette_diagram(X_, cluster_labels, n_clusters, title="Silhouette diagram"):
+  """
+  This code is based on scikit learn documentation:
+  https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py
+
+
+  Returns 
+  ----------------
+  sample_silhouette_values: the silhouette value of each sample
+  """
+
+  # The silhouette_score gives the average value for all the samples.
+  # This gives a perspective into the density and separation of the formed
+  # clusters
+  silhouette_avg = silhouette_score(X_, cluster_labels)
+
+  fig, ax1 = plt.subplots()
+  fig.set_size_inches(9, 7)
+  ax1.set_xlim([-0.1, 1])
+
+  # The (n_clusters+1)*10 is for inserting blank space between silhouette
+  # plots of individual clusters, to demarcate them clearly.
+  ax1.set_ylim([0, len(X_) + (n_clusters + 1) * 10])
+
+  # Compute the silhouette scores for each sample
+  sample_silhouette_values = silhouette_samples(X_, cluster_labels)
+  y_lower = 10
+  for i in range(n_clusters):
+  	# Aggregate the silhouette scores for samples belonging to
+  	# cluster i, and sort them
+  	ith_cluster_silhouette_values = \
+  		sample_silhouette_values[cluster_labels == i]
+  	ith_cluster_silhouette_values.sort()
+
+  	size_cluster_i = ith_cluster_silhouette_values.shape[0]
+  	y_upper = y_lower + size_cluster_i
+
+  	color = cm.nipy_spectral(float(i) / n_clusters)
+  	ax1.fill_betweenx(np.arange(y_lower, y_upper),
+  		0, ith_cluster_silhouette_values,
+  		facecolor=color, edgecolor=color, alpha=0.7)
+
+  	# Label the silhouette plots with their cluster numbers at the middle
+  	ax1.text(-0.05, y_lower + 0.5 * size_cluster_i, str(i))
+
+  	# Compute the new y_lower for next plot
+  	y_lower = y_upper + 10  # 10 for the 0 samples
+
+  	ax1.set_xlabel("The silhouette coefficient values")
+  	ax1.set_ylabel("Cluster label")
+
+  	# The vertical line for average silhouette score of all the values
+  	ax1.axvline(x=silhouette_avg, color="red", linestyle="--")
+
+  	return sample_silhouette_values
