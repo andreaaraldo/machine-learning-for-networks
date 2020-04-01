@@ -214,10 +214,11 @@ def silhouette_diagram(X_, cluster_labels, n_clusters, title="Silhouette diagram
   	# Compute the new y_lower for next plot
   	y_lower = y_upper + 10  # 10 for the 0 samples
 
+  	ax1.set_title(title)
   	ax1.set_xlabel("The silhouette coefficient values")
   	ax1.set_ylabel("Cluster label")
 
   	# The vertical line for average silhouette score of all the values
   	ax1.axvline(x=silhouette_avg, color="red", linestyle="--")
 
-  	return sample_silhouette_values
+  return sample_silhouette_values
