@@ -1,7 +1,7 @@
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, silhouette_samples, silhouette_score
 from sklearn.utils.multiclass import unique_labels
 import matplotlib.cm as cm
 
