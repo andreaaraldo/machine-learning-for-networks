@@ -3,6 +3,7 @@ from sklearn.base import BaseEstimator, RegressorMixin
 import pandas as pd
 import numpy as np
 
+from sklearn.model_selection import train_test_split
 from sklearn.utils.multiclass import check_classification_targets
 from sklearn.utils.validation import check_X_y, check_is_fitted, check_array
 from sklearn.utils.multiclass import unique_labels
@@ -77,4 +78,32 @@ class AndreaLinearRegression(BaseEstimator, RegressorMixin):
         print(self.results_.summary() )
 
 
-#check_estimator(AndreaLinearRegression)
+
+def subsample(X, y, n,random_state):
+	"""
+	Take a subsample of X and y composed of n rows.
+
+	Parameters
+	-------------------
+	X:		Array
+	y:		Array. It must have the same rows as X
+	n:		Number of rows to take
+	random_state: 	the seed
+
+
+	Returns
+	-------------------
+	X_sub:	A sample of n rows from X, selected randomly
+	y_sub:	A sample of n rows from y. The same row ids of X_sub are 
+	 		selected
+	"""
+
+	if X.shape[0] != y.shape[0]:
+		raise ValueError("X and y must have the same rows")
+
+	
+	X_sub, X_ignore, y_sub, y_ignore = \
+				train_test_split(X,y, train_size=n , 
+					random_state=random_state)
+
+	return X_sub, y_sub
