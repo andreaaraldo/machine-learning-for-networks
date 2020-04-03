@@ -1,7 +1,9 @@
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
-from sklearn.metrics import confusion_matrix, silhouette_samples, silhouette_score
+from sklearn.metrics import confusion_matrix, silhouette_samples, silhouette_score,\
+				average_precision_score, precision_score, recall_score, \
+				precision_recall_curve, roc_curve, roc_auc_score
 from sklearn.utils.multiclass import unique_labels
 import matplotlib.cm as cm
 from matplotlib.ticker import FormatStrFormatter
