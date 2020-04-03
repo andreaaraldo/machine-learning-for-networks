@@ -7,7 +7,6 @@ from sklearn.metrics import confusion_matrix, silhouette_samples, silhouette_sco
 from sklearn.utils.multiclass import unique_labels
 import matplotlib.cm as cm
 from matplotlib.ticker import FormatStrFormatter
-from sklearn.metrics import confusion_matrix
 
 def plot_corr(df, width, height, print_value, thresh=0):
 	    """ Plot a correlation plot
@@ -62,10 +61,6 @@ def rotate_labels(sm):
 		[s.xaxis.label.set_rotation(45) for s in sm.reshape(-1)]
 		[s.yaxis.label.set_rotation(0) for s in sm.reshape(-1)]
  
-
-from sklearn.metrics import confusion_matrix
-from sklearn.utils.multiclass import unique_labels
-import numpy as np
 
 
 def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None, 
@@ -322,6 +317,7 @@ def plot_roc_curve(y_train, anomaly_scores, ax, threshold_selected=None):
 def plot_precision_recall_vs_thresholds(y_train, anomaly_scores, ax, 
                                         threshold_selected=None):
   """
+
     From Fig.3.4 of Geron, Hands-On Machine Learning with Scikit-Learn, 
       Keras, and TensorFlow, O'Reilly 2019
   """
@@ -338,6 +334,7 @@ def plot_precision_recall_vs_thresholds(y_train, anomaly_scores, ax,
 def plot_tpr_fpr_vs_thresholds(y_train, anomaly_scores, ax, 
                                threshold_selected=None):
   """
+  
     Inspired by Fig.3.4 of Geron, Hands-On Machine Learning with Scikit-Learn, 
       Keras, and TensorFlow, O'Reilly 2019
   """
@@ -360,8 +357,7 @@ def plot_tpr_fpr_vs_thresholds(y_train, anomaly_scores, ax,
 
 def evaluate_anomaly_detector(y_train, anomaly_scores, threshold_selected=None):
   """
-    Fig.3.4 of Geron, Hands-On Machine Learning wi)th Scikit-Learn, Keras, and 
-            TensorFlow, O'Reilly 2019
+    Evaluates the results from anomaly detection
   """
   fig, axs = plt.subplots(2,2, figsize=(16, 16))
   fig.tight_layout(pad=8)
