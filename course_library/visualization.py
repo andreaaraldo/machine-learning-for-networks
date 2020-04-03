@@ -4,6 +4,8 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix, silhouette_samples, silhouette_score
 from sklearn.utils.multiclass import unique_labels
 import matplotlib.cm as cm
+from matplotlib.ticker import FormatStrFormatter
+from sklearn.metrics import confusion_matrix
 
 def plot_corr(df, width, height, print_value, thresh=0):
 	    """ Plot a correlation plot
@@ -224,3 +226,150 @@ def silhouette_diagram(X_, cluster_labels, n_clusters, sample_size=None,
   	ax1.axvline(x=silhouette_avg, color="red", linestyle="--")
 
   return sample_silhouette_values
+
+
+
+
+###########################################
+###### ANOMALY DETECTION ##################
+###########################################
+
+
+def false_positive_rate(y_true, y_pred):
+    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
+    fpr = fp/(fp+tn)
+    return fpr
+
+def plot_precision_recall_curve(y_train, anomaly_scores, ax, 
+                                threshold_selected=None):
+  """
+  Inspired by 
+    http://abhay.harpale.net/blog/machine-learning/threshold-tuning-using-roc/
+  """
+  
+  precision, recall, thresholds = precision_recall_curve(y_train, anomaly_scores)
+  pr_auc_score = average_precision_score(y_train,anomaly_scores)
+
+  ax.plot(recall, precision, 
+           label='Pr-Re curve (AUC = %0.2f)' % (pr_auc_score))
+  ax.set_ylabel('Precision')
+  ax.set_xlabel('Recall')
+
+  ax_tw = ax.twinx()  # instantiate a second axes that shares the same x-axis
+  ax_tw.plot(recall[:-1], thresholds,linestyle='dashed', color='grey', 
+              label='Threshold')
+  ax_tw.tick_params(axis='y')
+  ax_tw.set_ylabel('Threshold')
+  ax.grid(True)
+  ax.legend(loc="lower center")
+  ax_tw.legend(loc="lower left")
+  ax.set_xticks(np.arange(0, 1+0.09, 0.1))
+  ax.set_yticks(np.arange(0, 1+0.09, 0.1))
+
+  if threshold_selected != None:
+    y_pred = (anomaly_scores >= threshold_selected)
+    recall_sc = recall_score(y_train, y_pred)
+    print("Precision=", precision_score(y_train, y_pred))
+    print("Recall=", recall_sc)
+    ax.axvline(recall_sc, 0, 1, color='r', 
+               linestyle='-.', label="Threshold selected")
+    
+
+
+def plot_roc_curve(y_train, anomaly_scores, ax, threshold_selected=None):
+  """
+  Inspired by 
+    http://abhay.harpale.net/blog/machine-learning/threshold-tuning-using-roc/
+  """
+  
+  fpr, tpr, thresholds = roc_curve(y_train, anomaly_scores)
+  roc_auc_sc = roc_auc_score(y_train, anomaly_scores)
+  # The thresholds obtained here are the same as the ones obtained with the
+  # precision-recall curve
+  
+  ax.plot(fpr, tpr, label='ROC (AUC = %0.2f)' % (roc_auc_sc))
+  ax.set_ylabel('True Positive Rate (Recall) : TP/(TP+FN) )')
+  ax.set_xlabel('False Positive Rate: FP/(FP+TN)')
+
+  # Also plot the thresholds
+  ax_tw = ax.twinx()  # instantiate a second axes that shares the same x-axis
+  ax_tw.plot(fpr, thresholds,linestyle='dashed', color='grey', 
+              label='Threshold')
+  ax_tw.tick_params(axis='y')
+  ax_tw.set_ylabel('Threshold')
+  ax.grid(True)
+  ax.legend(loc="center right")
+  ax_tw.legend(loc="lower left")
+  ax.set_xticks(np.arange(0, 1+0.09, 0.1))
+  ax.set_yticks(np.arange(0, 1+0.09, 0.1))
+
+
+  if threshold_selected != None:
+    y_pred = (anomaly_scores >= threshold_selected)
+    tpr = recall_score(y_train, y_pred)
+    fpr = false_positive_rate(y_train, y_pred)
+
+    print("False Positive Rate = ", fpr)
+    print("True Positive Rate = ", tpr)
+    ax.axvline(fpr, 0, 1, color='r', 
+               linestyle='-.', label="Threshold selected")
+
+
+
+
+def plot_precision_recall_vs_thresholds(y_train, anomaly_scores, ax, 
+                                        threshold_selected=None):
+  """
+    From Fig.3.4 of Geron, Hands-On Machine Learning with Scikit-Learn, 
+      Keras, and TensorFlow, O'Reilly 2019
+  """
+  precision, recall, thresholds = precision_recall_curve(y_train, anomaly_scores)
+  ax.plot(thresholds, precision[:-1], 'b--', label='Precision')
+  ax.plot(thresholds, recall[:-1], 'g-', label='Recall')
+  ax.set_xlabel('Threshold')
+  ax.legend(loc='upper center')
+  ax.grid(True)
+
+
+
+
+def plot_tpr_fpr_vs_thresholds(y_train, anomaly_scores, ax, 
+                               threshold_selected=None):
+  """
+    Inspired by Fig.3.4 of Geron, Hands-On Machine Learning with Scikit-Learn, 
+      Keras, and TensorFlow, O'Reilly 2019
+  """
+  fpr, tpr, thresholds = roc_curve(y_train, anomaly_scores)
+  ax.plot(thresholds, fpr, 'b--', label='False Positive rate')
+  ax.plot(thresholds, tpr, 'g-', label='True Positive rate')
+  ax.set_xlabel('Threshold')
+  ax.legend(loc='upper center')
+  ax.grid(True)
+  ax.set_xticks(np.arange(min(thresholds),max(thresholds), 
+                         (max(thresholds) -min(thresholds) )/10  ))
+  ax.set_yticks(np.arange(0, 1+0.09, 0.1))
+  ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+
+  if threshold_selected != None:
+    ax.axvline(threshold_selected, 0, 1, color='r', 
+               linestyle='-.', label="Threshold selected")
+
+
+
+def evaluate_anomaly_detector(y_train, anomaly_scores, threshold_selected=None):
+  """
+    Fig.3.4 of Geron, Hands-On Machine Learning wi)th Scikit-Learn, Keras, and 
+            TensorFlow, O'Reilly 2019
+  """
+  fig, axs = plt.subplots(2,2, figsize=(16, 16))
+  fig.tight_layout(pad=8)
+  plt.rcParams["font.size"] = "12"
+
+  plot_precision_recall_curve(y_train, anomaly_scores, axs[0,0], threshold_selected)
+  plot_roc_curve(y_train, anomaly_scores, axs[0,1], threshold_selected)  
+  plot_precision_recall_vs_thresholds(y_train, anomaly_scores, axs[1,0], 
+                                      threshold_selected)
+  plot_tpr_fpr_vs_thresholds(y_train, anomaly_scores, axs[1,1], 
+                             threshold_selected)
+  
+
