@@ -327,6 +327,11 @@ def plot_precision_recall_vs_thresholds(y_train, anomaly_scores, ax,
   ax.set_xlabel('Threshold')
   ax.legend(loc='upper center')
   ax.grid(True)
+  ax.set_yticks(np.arange(0, 1+0.09, 0.1))
+  
+  if threshold_selected != None:
+    ax.axvline(threshold_selected, 0, 1, color='r', 
+      linestyle='-.', label="Threshold selected")
 
 
 
@@ -344,11 +349,11 @@ def plot_tpr_fpr_vs_thresholds(y_train, anomaly_scores, ax,
   ax.set_xlabel('Threshold')
   ax.legend(loc='upper center')
   ax.grid(True)
-  ax.set_xticks(np.arange(min(thresholds),max(thresholds), 
-                         (max(thresholds) -min(thresholds) )/10  ))
+  #ax.set_xticks(np.arange(min(thresholds),max(thresholds), 
+  #                       (max(thresholds) -min(thresholds) )/10  ))
+  #ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
   ax.set_yticks(np.arange(0, 1+0.09, 0.1))
-  ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-
+  
   if threshold_selected != None:
     ax.axvline(threshold_selected, 0, 1, color='r', 
                linestyle='-.', label="Threshold selected")
