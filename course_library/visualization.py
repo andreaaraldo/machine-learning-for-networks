@@ -85,24 +85,21 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
 		class_names:	Array of strings, where the first. The k-th element
 						is the name of the k-th class
 
-		normalization: 	If False, it just prints the number of values in 
+		normalize: 	(default=True) If False, it just prints the number of values in 
 						each cell. Otherwise it prints the frequencies, i.e.
 						the sum over each row is 1
 
-		title: 	Title of the figure
+		title: 	(default=None) Title of the figure
 
-		cmap: 	Color map
+		cmap: 	(default=plt.cm.Blues) Color map
 
-		text:	If True it prints numerical values on each cell. Otherwise
+		text:	(default=True) If True it prints numerical values on each cell. Otherwise
 				it just shows the colors
 
 
-		width: 	Of the figure
+		width: 	(default=8) Of the figure
 
-		height:	Of the figure
-
-
- 		Normalization can be applied by setting `normalize=True`.
+		height:	(default=8) Of the figure
  		"""
  		if not isinstance(class_names, (np.ndarray) ):
  		  raise TypeError('class_names must be an np.array. It is instead ', 
