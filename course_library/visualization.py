@@ -64,27 +64,45 @@ def rotate_labels(sm):
 
 
 def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None, 
-    cmap=plt.cm.Blues):
+    cmap=plt.cm.Blues, text=True, width=8, height=8 ):
  		"""
  		This function prints and plots the confusion matrix.
+ 		In case of errors, you may need to do 
+ 				class_names = np.array(class_names)
+ 		before calling this function.
+
+
+ 		Parameters:
+ 		--------------------------
+		target: The array of the true categories. It contains as many values 
+				as the number of samples. Each value is an integer number 
+				corresponding to a certain category. This array represents 
+				the true category of each sample.
+		
+		predicted:	It has the same format, but it does not represent the true 
+					category, rather it represents the result of a model.
+
+		class_names:	Array of strings, where the first. The k-th element
+						is the name of the k-th class
+
+		normalization: 	If False, it just prints the number of values in 
+						each cell. Otherwise it prints the frequencies, i.e.
+						the sum over each row is 1
+
+		title: 	Title of the figure
+
+		cmap: 	Color map
+
+		text:	If True it prints numerical values on each cell. Otherwise
+				it just shows the colors
+
+
+		width: 	Of the figure
+
+		height:	Of the figure
+
+
  		Normalization can be applied by setting `normalize=True`.
-
- 		# Suppose target is the array of the true categories.
-		# It contains as many values as the number of samples. Each value is an
-		# integer number corresponding to a certain category. This array
-		# represents the true category of each sample.
-		#
-		# predicted has the same format, but it does not represent the true
-		# category, rather it represents the result of a model.
-		#
-		# Note in case of classification models, the categories are the classes,
-		# while in case of anomaly detection models, the categories are
-		# anomaly / normal
-		#
-    # In case of errors, you may need to do 
-    #     class_names = np.array(class_names)
-    # to be sure you satisfy this requirement
-
  		"""
  		if not isinstance(class_names, (np.ndarray) ):
  		  raise TypeError('class_names must be an np.array. It is instead ', 
@@ -112,7 +130,7 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
 
  		print(cm)
 
- 		fig, ax = plt.subplots(figsize=(8,8))
+ 		fig, ax = plt.subplots(figsize=(width,height))
  		im = ax.imshow(cm, interpolation='nearest', cmap=cmap)
  		ax.figure.colorbar(im, ax=ax)
  		# We want to show all ticks...
@@ -129,13 +147,14 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
  			rotation_mode="anchor")
 
  		# Loop over data dimensions and create text annotations.
- 		fmt = '.2f' if normalize else 'd'
- 		thresh = cm.max() / 2.
- 		for i in range(cm.shape[0]):
- 			for j in range(cm.shape[1]):
- 				ax.text(j, i, format(cm[i, j], fmt),
- 					ha="center", va="center",
- 					color="white" if cm[i, j] > thresh else "black")
+ 		if text == True:
+	 		fmt = '.2f' if normalize else 'd'
+	 		thresh = cm.max() / 2.
+	 		for i in range(cm.shape[0]):
+	 			for j in range(cm.shape[1]):
+	 				ax.text(j, i, format(cm[i, j], fmt),
+	 					ha="center", va="center",
+	 					color="white" if cm[i, j] > thresh else "black")
  		fig.tight_layout()
  		return ax
 
