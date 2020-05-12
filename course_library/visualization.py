@@ -64,7 +64,7 @@ def rotate_labels(sm):
 
 
 def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None, 
-    cmap=viridis, text=True, width=8, height=8 ):
+    cmap='viridis', text=True, width=8, height=8 ):
  		"""
  		This function prints and plots the confusion matrix.
  		In case of errors, you may need to do 
@@ -91,7 +91,7 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
 
 		title: 	(default=None) Title of the figure
 
-		cmap: 	(default=viridis) Color map
+		cmap: 	(default='viridis') Color map
 
 		text:	(default=True) If True it prints numerical values on each cell. Otherwise
 				it just shows the colors
