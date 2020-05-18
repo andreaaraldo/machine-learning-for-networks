@@ -7,10 +7,10 @@ In this guided class, we will realize the components of a high-speed network ML 
 In the first part, you are going to train a network to predict what is the network load, based on some features.
 In the second part, you are going to use the trained model in an emulated scenario to make predictions at line rate.
 
-## Training and Validation
+## Training
 
-* Objective: Train a NN model that is able to predict the traffic load (label at the last column) using the given features (n-1 first columns).
-Store the trained model in a file. Load the trained model in a simple test scenario
+* Objective: Train a model that is able to predict the traffic load (label at the last column) using the given features (n-1 first columns).
+Store the trained model in a file. Load the trained model in a simple test scenario. To store and load the model, if it is a neural network, you can use ModelCheckpoint and CSVLogger callbacks, as in `04.neural-networks.ipynb`. For any other types of model, you can use pickle, as in `05.trees-and-ensambles.ipynb`. You can store the serialized model in your Google Drive.
 
 * Dataset
 The dataset contains some features related to CPU measurements in a network scenario.
@@ -30,14 +30,14 @@ The interesting datasets are :
 Check the features with the command:
 
 ``` 
-head fulldataset.csv
+! head fulldataset.csv
 
 > time,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-stores,L1-icache-load-misses,LLC-load-misses,LLC-loads,LLC-store-misses,LLC-stores,branch-load-misses,branch-misses,branches,bus-cycles,cache-misses,cache-references,context-switches,cpu-clock,cycles,dTLB-load-misses,dTLB-store-misses,dTLB-stores,iTLB-load-misses,iTLB-loads,instructions,minor-faults,node-load-misses,node-loads,node-store-misses,node-stores,page-faults,ref-cycles,task-clock,label
 
 ```
-While the full dataset includes all samples, the high/low/mid csv files include only one specific class.
+While the full dataset includes all samples, the high/low/mid csv files are just subsets and include each only one specific class.
 
-The notebook includes a skeleton of the typical steps for doing such a task.
+The notebook includes a skeleton of the typical steps for training a model.
 
 
 ## Testbed emulation
@@ -64,7 +64,7 @@ At the end of the main function, you will see how many packets are sent, receive
 * Parameters
 
 shared = Queue(maxsize=1024)   # Max size of the queue: can be modified to force additional losses
-rate = .1 # Rate for the TX generation: should be decreased for a higher rate
+rate = .1 # Rate for the TX generation: should be decreased for a higher rate **aa: Non si dovrebbe aumentare `rate` per un higher rate? In che unità di misura è? E' forse l'inter-packet time invece del rate?**
 duration = 5 # Number of seconds of the emulation
 
 
