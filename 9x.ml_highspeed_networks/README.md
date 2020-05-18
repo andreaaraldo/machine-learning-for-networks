@@ -23,9 +23,9 @@ The last column of the dataset is the label. The 3 label refer to the three case
 All the datasets are in .csv format
 The interesting datasets are :
 - fulldataset.csv
-- highdataset.csv
-- middataset.csv
-- lowdataset.csv
+- highdataset.csv (you can ignore it)
+- middataset.csv (you can ignore it)
+- lowdataset.csv (you can ignore it)
 
 Check the features with the command:
 
@@ -35,7 +35,7 @@ Check the features with the command:
 > time,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-stores,L1-icache-load-misses,LLC-load-misses,LLC-loads,LLC-store-misses,LLC-stores,branch-load-misses,branch-misses,branches,bus-cycles,cache-misses,cache-references,context-switches,cpu-clock,cycles,dTLB-load-misses,dTLB-store-misses,dTLB-stores,iTLB-load-misses,iTLB-loads,instructions,minor-faults,node-load-misses,node-loads,node-store-misses,node-stores,page-faults,ref-cycles,task-clock,label
 
 ```
-While the full dataset includes all samples, the high/low/mid csv files are just subsets and include each only one specific class.
+While the full dataset includes all samples, the high/low/mid csv files are just subsets and include each only one specific class. You can just use fulldataset.csv and ignore the others, unless you want to do some specific form of training that requires one class at a time.
 
 The notebook includes a skeleton of the typical steps for training a model.
 
