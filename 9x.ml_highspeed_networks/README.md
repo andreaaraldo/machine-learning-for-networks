@@ -64,7 +64,7 @@ At the end of the main function, you will see how many packets are sent, receive
 * Parameters
 
 shared = Queue(maxsize=1024)   # Max size of the queue: can be modified to force additional losses
-rate = .1 # Rate for the TX generation: should be decreased for a higher rate **aa: Non si dovrebbe aumentare `rate` per un higher rate? In che unità di misura è? E' forse l'inter-packet time invece del rate?**
+rate = .1 # Rate for the TX generation: should be decreased for a higher rate 
 duration = 5 # Number of seconds of the emulation
 
 
