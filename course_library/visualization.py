@@ -151,7 +151,7 @@ def plot_conf_mat(y_true, y_pred, class_names, normalize=True, title=None,
 	 			for j in range(cm.shape[1]):
 	 				ax.text(j, i, format(cm[i, j], fmt),
 	 					ha="center", va="center",
-	 					color="white" if cm[i, j] > thresh else "black")
+	 					color="white" if cm[i, j] < thresh else "black")
  		fig.tight_layout()
  		return ax
 
