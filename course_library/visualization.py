@@ -9,7 +9,7 @@ import matplotlib.cm as cm
 from matplotlib.ticker import FormatStrFormatter
 
 def plot_corr(df, width, height, print_value, thresh=0):
-	    """ Plot a correlation plot
+	    """ This function plots a correlation plot
 	    
 	    Parameters
 	    ------------
