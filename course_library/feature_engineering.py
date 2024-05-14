@@ -78,7 +78,7 @@ def get_features_correlated_to_target(df, target_feature):
 		coefficient between them and the target, ordered in decreasing
 		oder of correlation
 	"""
-	if not df['target_feature'].dtype.kind in 'biufc':
+	if not df[target_feature].dtype.kind in 'biufc':
 		#https://stackoverflow.com/a/38185438/2110769
 		raise TypeError ("The taget feature is not a number and thus correlation cannot be computed")
 
