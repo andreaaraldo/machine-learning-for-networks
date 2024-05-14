@@ -41,7 +41,9 @@ def get_most_correlated(df):
 		the pair of features and the Pearson's coefficient
 	"""
 
-	corrmatrix = df.corr().round(3)
+	#https://stackoverflow.com/a/28155580/2110769
+	df_num = df.select_dtypes(include='number')
+	corrmatrix = df_num.corr().round(3)
 
 
 	# Trick from https://stackoverflow.com/a/43073761/2110769
@@ -76,7 +78,14 @@ def get_features_correlated_to_target(df, target_feature):
 		coefficient between them and the target, ordered in decreasing
 		oder of correlation
 	"""
-	corrmatrix = df.corr().round(2)
+	if not df['target_feature'].dtype.kind in 'biufc':
+		#https://stackoverflow.com/a/38185438/2110769
+		raise TypeError ("The taget feature is not a number and thus correlation cannot be computed")
+
+	
+	#https://stackoverflow.com/a/28155580/2110769
+	df_num = df.select_dtypes(include='number')
+	corrmatrix = df_num.corr().round(2)
 	corr_to_label_num = corrmatrix[target_feature]
 	# We sort based on the absolute value (see https://stackoverflow.com/a/30486411/2110769)
 	features_corr = corr_to_label_num.reindex(corr_to_label_num.abs().
