@@ -48,7 +48,7 @@ def get_most_correlated(df):
 
 	# Trick from https://stackoverflow.com/a/43073761/2110769
 	#the matrix is symmetric so we need to extract upper triangle matrix without diagonal (k = 1)
-	highest_correlated = (corrmatrix.where(np.triu(np.ones(corrmatrix.shape), k=1).astype(np.bool))
+	highest_correlated = (corrmatrix.where(np.triu(np.ones(corrmatrix.shape), k=1).astype(bool))
 	                 .stack()
 	                 )
 	highest_correlated =\
