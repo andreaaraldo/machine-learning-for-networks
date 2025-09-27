@@ -94,7 +94,7 @@ def make_sequential_model(sample_size, layer_sizes,
   # Add hidden layers
   for i in range(1,len(layer_sizes)-1 ): # We iterate from the 2nd element to the penultimate
     if dropout_keep_prob < 1.0:
-      model.add( tf.keras.layers.Dropout(dropout_keep_prob) )
+      model.add( tf.keras.layers.Dropout(1-dropout_keep_prob) )
     model.add( MyDenseLayer(layer_sizes[i]) )
 
   # Add output layer
