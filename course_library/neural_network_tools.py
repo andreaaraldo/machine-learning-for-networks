@@ -94,7 +94,7 @@ def make_sequential_model(sample_size, layer_sizes,
   # Add hidden layers
   for i in range(1,len(layer_sizes)-1 ): # We iterate from the 2nd element to the penultimate
     if dropout_keep_prob < 1.0:
-      model.add( tf.keras.layers.Dropout(1-dropout_keep_prob) )
+      model.add( tf.keras.layers.Dropout(1.0-dropout_keep_prob) )
     model.add( MyDenseLayer(layer_sizes[i]) )
 
   # Add output layer
@@ -124,7 +124,8 @@ def enforce_reproducibility(seed):
   More on randomness and reproducibility, on this ODSC's blog: https://odsc.medium.com/properly-setting-the-random-seed-in-ml-experiments-not-as-simple-as-you-might-imagine-219969c84752
 
   """
-  keras.backend.clear_session()
+  keras.
+  backend.clear_session()
 
   # To know more:
   #       https://machinelearningmastery.com/reproducible-results-neural-networks-keras/
