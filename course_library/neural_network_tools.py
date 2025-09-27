@@ -113,6 +113,17 @@ def make_sequential_model(sample_size, layer_sizes,
   
   
 def enforce_reproducibility(seed):
+"""
+This function makes your code repeatable: we want to have the same results, every time we run the different neural networks below, no matter the order in which we run them and no matter who runs them.
+
+To this aim, we use the following tricks:
+
+    clear_session(): it resets the neural network weights. If we do not do so, if we train a certain neural network A and then another neural network B, which may have the same architecture, some of the weights of B are initialized as in A. If we run in the opposite order, some of the weights of A are initialized as in B. Therefore, our results would depend on the order of training, which we do not want. This is why we will use clear_session. Actually, this function does even more: it resets all the variables handled by tensorflow. If you do not use it, every time you create a new neural network tensor flow will not remove the previous ones and adds the new one to its set of variables. This can bring to an excessive memory consumption. clear_session resets everything, thus solving memory problems.
+    Setting seeds: during training, there is some stochastic operations done: for instance, the validation set is chosen randomly, by default, the batch of samples is selected randomly at each iteration, etc.
+
+More on randomness and reproducibility, on this ODSC's blog.
+
+"""
   keras.backend.clear_session()
 
   # To know more:
