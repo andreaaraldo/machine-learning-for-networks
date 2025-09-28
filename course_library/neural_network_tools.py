@@ -26,7 +26,7 @@ def make_sequential_model(sample_size, layer_sizes,
                           learning_rate=0.01,
                           regularization_coeff=0,
                           metrics=['accuracy'],
-                          dropout_keep_prob=1.0
+                          dropout_prob=1.0
                           ):
   """
   Makes a sequential model.
@@ -124,8 +124,7 @@ def enforce_reproducibility(seed):
   More on randomness and reproducibility, on this ODSC's blog: https://odsc.medium.com/properly-setting-the-random-seed-in-ml-experiments-not-as-simple-as-you-might-imagine-219969c84752
 
   """
-  keras.
-  backend.clear_session()
+  keras.backend.clear_session()
 
   # To know more:
   #       https://machinelearningmastery.com/reproducible-results-neural-networks-keras/
