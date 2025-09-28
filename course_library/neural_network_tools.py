@@ -26,7 +26,7 @@ def make_sequential_model(sample_size, layer_sizes,
                           learning_rate=0.01,
                           regularization_coeff=0,
                           metrics=['accuracy'],
-                          dropout_prob=1.0
+                          dropout_keep_prob=1.0
                           ):
   """
   Makes a sequential model.
