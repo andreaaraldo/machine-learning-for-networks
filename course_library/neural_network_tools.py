@@ -135,7 +135,8 @@ def enforce_reproducibility(seed):
   
   
 def train_model(model, nn_file, X_tr, y_tr, seed, max_epochs=1000,
-                overwrite=True, validation_split=0.2, patience=20):
+                overwrite=True, validation_split=0.2, patience=20,
+                batch_size=32):
   """
   model: neural network model
             It must be a compiled neural network, e.g., a model issued by the
@@ -224,7 +225,8 @@ def train_model(model, nn_file, X_tr, y_tr, seed, max_epochs=1000,
 
   history = model.fit(X_train, y_train, epochs=max_epochs,
                       validation_split=validation_split,
-                      callbacks = [plot_cb, checkpoint_cb, logger_cb, early_stop_cb])
+                      callbacks = [plot_cb, checkpoint_cb, logger_cb, early_stop_cb],
+                      batch_size=batch_size)
 
 
   return history
