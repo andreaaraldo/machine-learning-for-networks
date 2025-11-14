@@ -1,11 +1,20 @@
 """
+Author: Andrea ARALDO 
+
 References are made to [Ge19], which refers to 
 
 Geron, Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2019, O'Reilly
 """
 
+try:
+    from livelossplot import PlotLossesKerasTF
+except ImportError:
+    raise ImportError(
+        "The library 'livelossplot' is required. Install it with:\n"
+        "pip install livelossplot"
+    )
 
-from livelossplot import PlotLossesKerasTF
+
 import os
 from os.path import isfile
 from functools import partial
